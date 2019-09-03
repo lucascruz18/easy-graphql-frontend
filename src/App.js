@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ApolloProvider } from 'react-apollo';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-function App() {
+import client from './services/apollo';
+
+import Dashboard from './pages/Dashboard';
+import Edit from './pages/Edit';
+import New from './pages/New';
+
+import GlobalStyles from './styles/global';
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <ApolloProvider client={client}>
+        <Switch>
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/edit/:id" component={Edit} />
+          <Route path="/new" component={New} />
+        </Switch>
+        <GlobalStyles />
+      </ApolloProvider>
+    </Router>
   );
 }
-
-export default App;
